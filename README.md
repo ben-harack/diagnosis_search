@@ -67,7 +67,7 @@ Before checking in code, there should be no style violations flagged.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/diagnosis_search.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ben-harack/diagnosis_search.
 
 
 ## License
