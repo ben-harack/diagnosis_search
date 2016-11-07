@@ -1,34 +1,69 @@
 # DiagnosisSearch
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/diagnosis_search`. To experiment with that code, run `bin/console` for an interactive prompt.
+This script searches for occurences of a string within a file using two methods: 
 
-TODO: Delete this and the text above, and describe your gem
+1. a straightforward linear Ruby Array search 
+2. a suffix tree constructed out of all the lines in the file
 
-## Installation
+## Running locally
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'diagnosis_search'
+After cloning, install the gem dependences:
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install diagnosis_search
+$ bundle install
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+Help text:
+```
+Usage: search [options]
+    -f, --data-file FILE             Data file
+    -s, --search-string STRING       Search string
+```
+
+Example execution with provided data file (using `bundle exec` to execute within the bundler environment):
+```
+$ bundle exec bin/search -f data.txt -s 'ce'
+Tree search results (total of 13):
+brain cancer
+breast cancer
+cancer
+celiac disease
+cervical cancer
+colon cancer
+impotence
+jaundice
+lactose intolerance
+liver cancer
+lung cancer
+ovarian cancer
+prostate cancer
+
+Array search results (total of 13):
+brain cancer
+breast cancer
+cancer
+celiac disease
+cervical cancer
+colon cancer
+impotence
+jaundice
+lactose intolerance
+liver cancer
+lung cancer
+ovarian cancer
+prostate cancer
+
+Are the two result sets identical? true
+```
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+This project uses rubocop for style checking. To check for style violations, run:
+```
+$ bundle exec rubocop lib bin
+```
+Before checking in code, there should be no style violations flagged.
 
 ## Contributing
 
