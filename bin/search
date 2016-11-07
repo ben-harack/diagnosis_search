@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+require 'diagnosis_search'
+require 'optparse'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: search [options]'
+  opts.on('-f', '--data-file FILE', 'Data file') do |f|
+    options[:data_file] = f
+  end
+  opts.on('-s', '--search-string STRING', 'Search string') do |s|
+    options[:search_string] = s
+  end
+end.parse!
+
+abort('Argument --search-string required.') unless options[:search_string]
+
+abort('Argument --data-file required. ') unless options[:data_file]
+
+unless File.file?(options[:data_file])
+  abort("File \"#{options[:data_file]}\" does not exist.")
+end
+
+diagnosis_corpus = DiagnosisSearch::DiagnosisCorpus.new(options[:data_file])
+search_string = options[:search_string]
+tree_results = diagnosis_corpus.search_suffix_tree(search_string).sort
+puts "Tree search results (total of #{tree_results.size}):"
+tree_results.each { |item| puts item }
+
+array_results = diagnosis_corpus.search_array(search_string).sort
+puts "\nArray search results (total of #{array_results.size}):"
+array_results.each { |item| puts item }
+
+identical_result_sets = array_results == tree_results
+puts "\nAre the two result sets identical? #{identical_result_sets}"
+unless identical_result_sets
+  puts "Array results not in tree results: #{array_results - tree_results}"
+  puts "Tree results not in array results: #{tree_results - array_results}\n"
+end
